@@ -42,6 +42,7 @@ public class TalkManager : MonoBehaviour
             return talkData[id][talkIndex];
     }
 
+    //초상화가져오기
     public Sprite GetPortrait(int id, int portraitIndex)
     {
         return portraitData[id + portraitIndex];
