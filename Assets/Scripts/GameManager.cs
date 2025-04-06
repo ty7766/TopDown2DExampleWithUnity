@@ -44,6 +44,7 @@ public class GameManager : MonoBehaviour
             return;
         }
 
+        //
         //NPC와 사물 구분
         if (isNPC)
         {
