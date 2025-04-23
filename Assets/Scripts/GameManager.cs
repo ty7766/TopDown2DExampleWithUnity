@@ -15,6 +15,9 @@ public class GameManager : MonoBehaviour
     //초상화
     public Image portraitImg;
 
+    //퀘스트
+    public QuestManager questManager;
+
     void Start()
     {
         talkPanel.SetActive(false);
@@ -34,13 +37,16 @@ public class GameManager : MonoBehaviour
 
     void Talk(int id, bool isNPC)
     {
-        string talkData = talkManager.GetTalk(id, talkIndex);
+        //대화 초기화
+        int questTalkIndex = questManager.GetQuestTalkIndex(id);
+        string talkData = talkManager.GetTalk(id + questTalkIndex, talkIndex);
 
         //대화 끝났을 때
         if(talkData == null)
         {
             isAction = false;
             talkIndex = 0;
+            questManager.CheckQuest();  //퀘스트 절차 건너뜀 방지
             return;
         }
 
