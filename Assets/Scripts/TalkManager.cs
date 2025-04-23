@@ -33,10 +33,10 @@ public class TalkManager : MonoBehaviour
         portraitData.Add(1000 + 2, PortraitArr[2]);
         portraitData.Add(1000 + 3, PortraitArr[3]);
 
-        portraitData.Add(2000 + 0, PortraitArr[0]);
-        portraitData.Add(2000 + 1, PortraitArr[1]);
-        portraitData.Add(2000 + 2, PortraitArr[2]);
-        portraitData.Add(2000 + 3, PortraitArr[3]);
+        portraitData.Add(2000 + 0, PortraitArr[4]);
+        portraitData.Add(2000 + 1, PortraitArr[5]);
+        portraitData.Add(2000 + 2, PortraitArr[6]);
+        portraitData.Add(2000 + 3, PortraitArr[7]);
     }
 
     //대화 가져오기
