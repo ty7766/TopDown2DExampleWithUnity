@@ -25,11 +25,18 @@ public class TalkManager : MonoBehaviour
         talkData.Add(100, new string[] { "평범한 나무상자다." });
         talkData.Add(200, new string[] { "누군가 사용했던 흔적이 있는 책상이다." });
 
+        talkData.Add(2000, new string[] { "누구세요? 처음보는 얼굴인데...:0", "외지에서 오셨나요?:1" });
+
         //이미지 불러오기
         portraitData.Add(1000 + 0, PortraitArr[0]);
         portraitData.Add(1000 + 1, PortraitArr[1]);
         portraitData.Add(1000 + 2, PortraitArr[2]);
         portraitData.Add(1000 + 3, PortraitArr[3]);
+
+        portraitData.Add(2000 + 0, PortraitArr[0]);
+        portraitData.Add(2000 + 1, PortraitArr[1]);
+        portraitData.Add(2000 + 2, PortraitArr[2]);
+        portraitData.Add(2000 + 3, PortraitArr[3]);
     }
 
     //대화 가져오기
