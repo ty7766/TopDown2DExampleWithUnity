@@ -1,6 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//04.24
+//퀘스트 진행 중 기본 대사를 출력할 때도 반복해서 Ch1, Ch2의 문구가 반복해서 출력됨
+
 public class TalkManager : MonoBehaviour
 {
     //Dictionary에 ID, Text 저장
@@ -21,7 +24,9 @@ public class TalkManager : MonoBehaviour
     void GenerateData()
     {
         //NPCA
-        talkData.Add(1000, new string[] {"안녕?:0", "이 곳에 처음 왔구나?:1"});
+        talkData.Add(1000, new string[] {"안녕?:0",
+                                         "이 곳에 처음 왔구나?:1",
+                                         "한 번 둘러보도록 해.:0"});
 
         //Obj
         talkData.Add(100, new string[] { "평범한 나무상자다." });
@@ -38,7 +43,20 @@ public class TalkManager : MonoBehaviour
 
         talkData.Add(11 + 2000, new string[] { "이 호수의 전설을 들으러 온거야?:0",
                                                "그럼 일 좀 하나 도와줘야 겠는걸?:1",
-                                               "내 집 근처에 떨어진 동전 좀 주워줬으면 해.:0"});
+                                               "내 집 근처에 떨어진 동전 좀 주워줬으면 해.:1"});
+
+        talkData.Add(20 + 1000, new string[] { "루도의 동전?:0",
+                                               "돈을 흘리고 다니면 못쓰지!:3",
+                                               "나중에 루도에게 한마디 해야겠어.:3"});
+
+        talkData.Add(20 + 2000, new string[] { "찾으면 꼭 좀 가져다 줘.:1" });
+
+        talkData.Add(20 + 5000, new string[] { "동전을 찾았다." });
+
+        talkData.Add(21 + 2000, new string[] { "동전을 찾았어?:1",
+                                               "찾아줘서 고마워.:2" });
+
+
 
         //이미지 불러오기
         portraitData.Add(1000 + 0, PortraitArr[0]);
@@ -55,6 +73,21 @@ public class TalkManager : MonoBehaviour
     //대화 가져오기
     public string GetTalk(int id, int talkIndex)
     {
+        if (!talkData.ContainsKey(id))
+        {
+            if (!talkData.ContainsKey(id - id % 10))
+            {
+                //퀘스트 이외 대사 유지(퀘스트 대상 제외한 나머지 Obj는 기본 대사 출력
+                return GetTalk(id - id % 100, talkIndex);
+            }
+            else
+            {
+                //해당 퀘스트 진행 중, 남은 대사가 없을 때
+                // -> 퀘스트 처음 대사 가져오기
+                return GetTalk(id - id % 10, talkIndex);
+            }
+
+        }
         //오브젝트 상호작용에 들어있는 모든 텍스트 대화를 했으면
         if (talkIndex == talkData[id].Length)
             return null;
