@@ -14,20 +14,7 @@ public class PlayerAction : MonoBehaviour
 
     public GameManager manager;
 
-    //모바일 버전
-    int up_V;
-    int down_V;
-    int left_V;
-    int right_V;
-    bool up_Down;
-    bool down_Down;
-    bool left_Down;
-    bool right_Down;
-    bool up_Up;
-    bool down_Up;
-    bool left_Up;
-    bool right_Up;
-
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
@@ -37,17 +24,16 @@ public class PlayerAction : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Move Value (PC, Mobile 통합)
+        //Move Value
         //대화창일 때 캐릭터 움직임 방지
-        h = manager.isAction ? 0 : Input.GetAxisRaw("Horizontal") + right_V + left_V;
-        v = manager.isAction ? 0 : Input.GetAxisRaw("Vertical") + up_V + down_V;
+        h = manager.isAction ? 0 : Input.GetAxisRaw("Horizontal");
+        v = manager.isAction ? 0 : Input.GetAxisRaw("Vertical");
 
         //Check Button Event
-        bool hDown = manager.isAction ? false : Input.GetButtonDown("Horizontal") || right_Down || left_Down;
-        bool vDown = manager.isAction ? false : Input.GetButtonDown("Vertical") || up_Down || down_Down;
-        bool hUp = manager.isAction ? false : Input.GetButtonUp("Horizontal") || right_Up || left_Up;
-        bool vUp = manager.isAction ? false : Input.GetButtonUp("Vertical") || up_Up || down_Up;
-
+        bool hDown = manager.isAction ? false : Input.GetButtonDown("Horizontal");
+        bool vDown = manager.isAction ? false : Input.GetButtonDown("Vertical");
+        bool hUp = manager.isAction ? false : Input.GetButtonUp("Horizontal");
+        bool vUp = manager.isAction ? false : Input.GetButtonUp("Vertical");
 
         //Check H,V move
         if (hDown)
@@ -84,16 +70,6 @@ public class PlayerAction : MonoBehaviour
         //Scan
         if (Input.GetButtonDown("Jump") && scanObject != null)
             manager.Action(scanObject);
-
-        //Mobile Var Init
-        up_Down = false;
-        down_Down = false;
-        left_Down = false;
-        right_Down = false;
-        up_Up = false;
-        down_Up = false;
-        left_Up = false;
-        right_Up = false;
     }
 
     private void FixedUpdate()
@@ -118,57 +94,5 @@ public class PlayerAction : MonoBehaviour
         }
         else
             scanObject = null;
-    }
-
-    public void ButtonDown(string type)
-    {
-        switch (type)
-        {
-            case "U":
-                up_V = 1;
-                up_Down = true;
-                break;
-            case "D":
-                down_V = -1;
-                down_Down = true;
-                break;
-            case "L":
-                left_V = -1;
-                left_Down = true;
-                break;
-            case "R":
-                right_V = 1;
-                right_Down = true;
-                break;
-            case "A":
-                if (scanObject != null)
-                    manager.Action(scanObject);
-                break;
-            case "C":
-                manager.SubMenuActive();
-                break;
-        }
-    }
-    public void ButtonUp(string type)
-    {
-        switch (type)
-        {
-            case "U":
-                up_V = 0;
-                up_Up = true;
-                break;
-            case "D":
-                down_V = 0;
-                down_Up = true;
-                break;
-            case "L":
-                left_V = 0;
-                left_Up = true;
-                break;
-            case "R":
-                right_V = 0;
-                right_Up = true;
-                break;
-        }
     }
 }
