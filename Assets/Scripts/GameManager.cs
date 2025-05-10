@@ -25,6 +25,24 @@ public class GameManager : MonoBehaviour
     //서브메뉴
     public GameObject MenuSet;
 
+    //싱글톤
+    public static GameManager instance = null;
+
+    void Awake()
+    {
+        //인스턴스가 없으면 생성
+        if (instance == null)
+        {
+            instance = this;
+            //다른 씬으로 넘어가도 현재 게임오브젝트가 삭제되지 않고 유지
+            DontDestroyOnLoad(this.gameObject);
+        }
+
+        //인스턴스가 기존에 생성되어있으면 현재 생성된 인스턴스 삭제
+        else if(instance != null)
+            Destroy(this.gameObject);
+    }
+
     void Start()
     {
         GameLoad();

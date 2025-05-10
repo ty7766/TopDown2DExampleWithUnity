@@ -12,7 +12,8 @@ public class PlayerAction : MonoBehaviour
     Rigidbody2D rigid;
     Animator anim;
 
-    public GameManager manager;
+    //기존 Gamemanager 접근
+    GameManager manager;
 
     //모바일 버전
     int up_V;
@@ -33,7 +34,12 @@ public class PlayerAction : MonoBehaviour
         rigid = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
     }
-
+    void Start()
+    {
+        //manager = GameObject.Find("manager").GetComponent<GameManager>();
+        manager = GameManager.instance;
+        Debug.Log("[PlayerAction.cs] GameManager 연결 확인");
+    }
     // Update is called once per frame
     void Update()
     {
@@ -49,13 +55,23 @@ public class PlayerAction : MonoBehaviour
         bool vUp = manager.isAction ? false : Input.GetButtonUp("Vertical") || up_Up || down_Up;
 
 
-        //Check H,V move
+        //Check H,V move (Debug)
         if (hDown)
+        {
             isHorizonMove = true;
+            Debug.Log("[PlayerAction.cs] GameManager : 수평 이동 시작");
+        }
         else if (vDown)
+        {
             isHorizonMove = false;
+            Debug.Log("[PlayerAction.cs] GameManager : 수직 이동 시작");
+        }
         else if (hUp || vUp)
+        {
             isHorizonMove = h != 0;
+            Debug.Log($"[PlayerAction.cs] GameManager : 이동 키 뗌");
+        }
+
 
         //Animation
         if (anim.GetInteger("hAxisRaw") != h)
@@ -83,7 +99,10 @@ public class PlayerAction : MonoBehaviour
 
         //Scan
         if (Input.GetButtonDown("Jump") && scanObject != null)
+        {
             manager.Action(scanObject);
+            Debug.Log($"[PlayerAction.cs] GameManager : 스캔 확인");
+        }
 
         //Mobile Var Init
         up_Down = false;
